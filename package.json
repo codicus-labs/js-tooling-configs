@@ -1,0 +1,160 @@
+{
+    "name": "@codicus/configs",
+    "version": "0.1.0",
+    "description": "Shared JavaScript, TypeScript, and Svelte tooling configurations",
+    "license": "UNLICENSED",
+    "files": [
+        "dist",
+        "tsconfig",
+        "oxfmt.json",
+        "pnpmfile.mjs"
+    ],
+    "type": "module",
+    "exports": {
+        "./eslint": {
+            "types": "./dist/eslint/index.d.ts",
+            "default": "./dist/eslint/index.js"
+        },
+        "./eslint/node": {
+            "types": "./dist/eslint/node.d.ts",
+            "default": "./dist/eslint/node.js"
+        },
+        "./eslint/svelte": {
+            "types": "./dist/eslint/svelte.d.ts",
+            "default": "./dist/eslint/svelte.js"
+        },
+        "./eslint/no-module-mocking": {
+            "types": "./dist/eslint/no-module-mocking.d.ts",
+            "default": "./dist/eslint/no-module-mocking.js"
+        },
+        "./eslint/package-boundaries": {
+            "types": "./dist/eslint/package-boundaries.d.ts",
+            "default": "./dist/eslint/package-boundaries.js"
+        },
+        "./oxlint": {
+            "types": "./dist/oxlint/index.d.ts",
+            "default": "./dist/oxlint/index.js"
+        },
+        "./oxlint/node": {
+            "types": "./dist/oxlint/node.d.ts",
+            "default": "./dist/oxlint/node.js"
+        },
+        "./oxlint/no-module-mocking": {
+            "types": "./dist/oxlint/no-module-mocking.d.ts",
+            "default": "./dist/oxlint/no-module-mocking.js"
+        },
+        "./oxlint/package-boundaries": {
+            "types": "./dist/oxlint/package-boundaries.d.ts",
+            "default": "./dist/oxlint/package-boundaries.js"
+        },
+        "./vitest": {
+            "types": "./dist/vitest/node.d.ts",
+            "default": "./dist/vitest/node.js"
+        },
+        "./vitest/svelte": {
+            "types": "./dist/vitest/svelte.d.ts",
+            "default": "./dist/vitest/svelte.js"
+        },
+        "./commitlint": {
+            "types": "./dist/commitlint.d.ts",
+            "default": "./dist/commitlint.js"
+        },
+        "./lint-rules": {
+            "types": "./dist/lint-rules/index.d.ts",
+            "default": "./dist/lint-rules/index.js"
+        },
+        "./tsconfig/base.json": "./tsconfig/base.json",
+        "./tsconfig/node.json": "./tsconfig/node.json",
+        "./tsconfig/svelte.json": "./tsconfig/svelte.json",
+        "./oxfmt": "./oxfmt.json",
+        "./pnpm-plugin": "./pnpmfile.mjs"
+    },
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "check": "pnpm run build && pnpm run typecheck && pnpm run test",
+        "typecheck": "tsc --noEmit -p tsconfig.build.json",
+        "test": "node --test test/*.test.mjs"
+    },
+    "dependencies": {
+        "@commitlint/config-conventional": "21.2.2",
+        "@commitlint/types": "21.2.0",
+        "@eslint/js": "10.0.1",
+        "@tsconfig/node24": "24.0.5",
+        "@vitest/eslint-plugin": "1.6.27",
+        "eslint-config-prettier": "10.1.8",
+        "eslint-plugin-playwright": "2.11.0",
+        "eslint-plugin-svelte": "3.23.0",
+        "globals": "17.11.0",
+        "typescript-eslint": "8.67.0"
+    },
+    "devDependencies": {
+        "@oxlint/plugins": "1.79.0",
+        "@sveltejs/vite-plugin-svelte": "7.3.1",
+        "@types/node": "26.1.0",
+        "@vitest/coverage-v8": "4.1.11",
+        "eslint": "10.9.0",
+        "jsdom": "29.1.1",
+        "oxfmt": "0.64.0",
+        "oxlint": "1.79.0",
+        "svelte": "5.57.1",
+        "typescript": "6.0.3",
+        "vite": "8.2.2",
+        "vitest": "4.1.11"
+    },
+    "peerDependencies": {
+        "@commitlint/cli": ">=21 <22",
+        "@sveltejs/vite-plugin-svelte": ">=7 <8",
+        "@types/node": ">=24 <27",
+        "@vitest/coverage-v8": ">=4 <5",
+        "eslint": ">=10 <11",
+        "jsdom": ">=29 <30",
+        "oxfmt": ">=0.64 <1",
+        "oxlint": ">=1.79 <2",
+        "svelte": ">=5 <6",
+        "typescript": ">=5.9 <6.1",
+        "vite": ">=8 <9",
+        "vitest": ">=4 <5"
+    },
+    "peerDependenciesMeta": {
+        "@commitlint/cli": {
+            "optional": true
+        },
+        "@sveltejs/vite-plugin-svelte": {
+            "optional": true
+        },
+        "@types/node": {
+            "optional": true
+        },
+        "@vitest/coverage-v8": {
+            "optional": true
+        },
+        "eslint": {
+            "optional": true
+        },
+        "jsdom": {
+            "optional": true
+        },
+        "oxfmt": {
+            "optional": true
+        },
+        "oxlint": {
+            "optional": true
+        },
+        "svelte": {
+            "optional": true
+        },
+        "typescript": {
+            "optional": true
+        },
+        "vite": {
+            "optional": true
+        },
+        "vitest": {
+            "optional": true
+        }
+    },
+    "engines": {
+        "node": ">=24"
+    },
+    "packageManager": "pnpm@12.4.2"
+}
