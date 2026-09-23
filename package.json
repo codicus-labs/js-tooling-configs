@@ -82,7 +82,7 @@
         "format:check": "oxfmt --check .",
         "lint": "oxlint .",
         "prepare": "pnpm run build",
-        "typecheck": "tsc --noEmit -p tsconfig.build.json && tsc -p tsconfig.config.json",
+        "typecheck": "tsc -p tsconfig.json",
         "test": "node --test test/*.test.mjs"
     },
     "dependencies": {
