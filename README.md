@@ -57,9 +57,11 @@ Unlike a dedicated `pnpm-plugin-*` config dependency, this **single package** ca
 
 ## Development
 
+`oxlint.config.ts` and `oxfmt.config.ts` at the repository root are auto-discovered by the CLIs and editor integrations. After `pnpm install`, the `prepare` script builds the local package exports needed by Oxlint and its custom rules.
+
 ```sh
 pnpm install
-pnpm check
+pnpm check # build, typecheck, Oxlint, Oxfmt, tests
 ```
 
 ## Releases
