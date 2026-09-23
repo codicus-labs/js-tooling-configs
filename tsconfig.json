@@ -1,7 +1,4 @@
 {
-    "extends": "./tsconfig/node.json",
-    "compilerOptions": {
-        "noEmit": true
-    },
-    "include": ["src/**/*.ts", "oxfmt.config.ts", "oxlint.config.ts"]
+    "files": [],
+    "references": [{ "path": "./tsconfig.build.json" }, { "path": "./tsconfig.tooling.json" }]
 }

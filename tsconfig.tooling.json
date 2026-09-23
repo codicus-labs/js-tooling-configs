@@ -1,0 +1,9 @@
+{
+    "extends": "./tsconfig/node.json",
+    "compilerOptions": {
+        "composite": true,
+        "noEmit": true
+    },
+    "files": ["oxfmt.config.ts", "oxlint.config.ts"],
+    "references": [{ "path": "./tsconfig.build.json" }]
+}
