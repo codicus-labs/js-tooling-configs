@@ -2,6 +2,7 @@
     "extends": "./tsconfig/node.json",
     "compilerOptions": {
         "composite": true,
+        "tsBuildInfoFile": "./node_modules/.cache/tsconfig.tooling.tsbuildinfo",
         "noEmit": true
     },
     "files": ["oxfmt.config.ts", "oxlint.config.ts"],

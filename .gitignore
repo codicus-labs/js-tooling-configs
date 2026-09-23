@@ -6,4 +6,3 @@ node_modules/
 .pnpm-cache/
 .pnpm-store/
 *.tgz
-*.tsbuildinfo
