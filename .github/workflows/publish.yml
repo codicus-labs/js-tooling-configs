@@ -1,0 +1,63 @@
+name: Publish
+
+on:
+    push:
+        branches: [main]
+
+permissions:
+    contents: write
+    id-token: write
+
+concurrency:
+    group: npm-publish
+    cancel-in-progress: false
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+              with:
+                  fetch-depth: 0
+            - name: Detect version change
+              id: version
+              env:
+                  BEFORE: ${{ github.event.before }}
+              run: |
+                  previous=$(git show "$BEFORE:package.json" | node -p "JSON.parse(require('fs').readFileSync(0, 'utf8')).version")
+                  current=$(node -p "require('./package.json').version")
+                  if [ "$previous" != "$current" ]; then
+                    echo "publish=true" >> "$GITHUB_OUTPUT"
+                    echo "version=$current" >> "$GITHUB_OUTPUT"
+                  fi
+            - uses: pnpm/action-setup@v4
+              if: steps.version.outputs.publish == 'true'
+            - uses: actions/setup-node@v6
+              if: steps.version.outputs.publish == 'true'
+              with:
+                  node-version: '24'
+                  cache: pnpm
+                  registry-url: https://registry.npmjs.org
+            - name: Check npm bootstrap
+              if: steps.version.outputs.publish == 'true'
+              run: |
+                  if ! npm view @codicus/configs name --json >/dev/null 2>&1; then
+                    echo 'Publish 0.1.0 manually, then configure npm trusted publishing for publish.yml before merging a release PR.' >&2
+                    exit 1
+                  fi
+                  if npm view "@codicus/configs@${{ steps.version.outputs.version }}" version --json >/dev/null 2>&1; then
+                    echo 'This version is already published; refusing to publish it again.' >&2
+                    exit 1
+                  fi
+            - run: pnpm install --frozen-lockfile
+              if: steps.version.outputs.publish == 'true'
+            - run: pnpm check && pnpm exec oxfmt --config=oxfmt.json --check .
+              if: steps.version.outputs.publish == 'true'
+            - run: npm publish --access public
+              if: steps.version.outputs.publish == 'true'
+            - name: Tag and create GitHub release
+              if: steps.version.outputs.publish == 'true'
+              env:
+                  GH_TOKEN: ${{ github.token }}
+                  VERSION: ${{ steps.version.outputs.version }}
+              run: gh release create "v$VERSION" --target "$GITHUB_SHA" --generate-notes --title "v$VERSION"

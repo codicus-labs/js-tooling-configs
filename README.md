@@ -1,6 +1,6 @@
 # @codicus/configs
 
-Shared JavaScript, TypeScript, Node, and Svelte/SvelteKit tooling presets in one npm package. Node.js 24+ and pnpm are expected. This repository is not published to npm yet.
+Shared JavaScript, TypeScript, Node, and Svelte/SvelteKit tooling presets in one npm package. Node.js 24+ and pnpm are expected. The initial npm release has not been published yet.
 
 ## Presets
 
@@ -61,5 +61,11 @@ Unlike a dedicated `pnpm-plugin-*` config dependency, this **single package** ca
 pnpm install
 pnpm check
 ```
+
+## Releases
+
+The first publish must be done manually (`pnpm check && npm publish --access public`); npm trusted publishing can only be configured on an existing package. Then, on npmjs.com under `@codicus/configs` → Settings → Trusted Publisher, configure GitHub Actions for owner `codicus-labs`, repository `js-tooling-configs`, workflow `publish.yml`, with direct `npm publish` allowed. The workflow needs no npm token.
+
+For subsequent changes, commit an intent with `pnpm change` (preview with `pnpm change status`). These `.changeset/` files are pnpm's native format; neither the Changesets CLI nor its action is used. On `main`, the Release PR workflow runs `pnpm version -r`, writes `CHANGELOG.md`, and opens/updates `release-pr/main`. Merge that PR to publish the new version to npm and create a GitHub release. The repository or organization must allow GitHub Actions to create pull requests under Settings → Actions → General → Workflow permissions. PRs created with `GITHUB_TOKEN` do not trigger CI automatically, but the publish workflow reruns checks before publishing.
 
 The package has no license grant (`UNLICENSED`); decide on a public license before inviting external reuse.

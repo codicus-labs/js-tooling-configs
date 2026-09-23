@@ -3,6 +3,10 @@
     "version": "0.1.0",
     "description": "Shared JavaScript, TypeScript, and Svelte tooling configurations",
     "license": "UNLICENSED",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/codicus-labs/js-tooling-configs.git"
+    },
     "files": [
         "dist",
         "tsconfig",
@@ -68,6 +72,9 @@
         "./tsconfig/svelte.json": "./tsconfig/svelte.json",
         "./oxfmt": "./oxfmt.json",
         "./pnpm-plugin": "./pnpmfile.mjs"
+    },
+    "publishConfig": {
+        "access": "public"
     },
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
