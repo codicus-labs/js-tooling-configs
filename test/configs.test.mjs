@@ -18,23 +18,23 @@ test('ESLint parses Svelte components', async () => {
     assert.equal(result.errorCount, 0);
 });
 
-test('Oxlint resolves the bundled custom rules', () => {
+test('Oxlint auto-discovers the root config and resolves custom rules', () => {
     assert.deepEqual(oxlintConfig.jsPlugins, [{ name: 'codicus', specifier: '@codicus/configs/lint-rules' }]);
-    const result = spawnSync('pnpm', ['exec', 'oxlint', '-c', 'dist/oxlint/index.js', 'src/commitlint.ts'], {
+    const result = spawnSync('pnpm', ['exec', 'oxlint', 'src/commitlint.ts'], {
         cwd: root,
         encoding: 'utf8',
     });
     assert.equal(result.status, 0, result.stderr || result.stdout);
 });
 
-test('Oxfmt formats Svelte without a separate Prettier install', () => {
-    const result = spawnSync('pnpm', ['exec', 'oxfmt', '--config=oxfmt.json', '--stdin-filepath=example.svelte'], {
+test('Oxfmt auto-discovers the root config and formats Svelte', () => {
+    const result = spawnSync('pnpm', ['exec', 'oxfmt', '--stdin-filepath=example.svelte'], {
         cwd: root,
         encoding: 'utf8',
         input: '<script>let count=1;</script>\n<h1>{count}</h1>\n',
     });
     assert.equal(result.status, 0, result.stderr);
-    assert.match(result.stdout, /let count = 1;/);
+    assert.match(result.stdout, /<script>\nlet count = 1;\n<\/script>/);
 });
 
 test('pnpm plugin applies the installation policy', async () => {

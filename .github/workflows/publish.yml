@@ -51,7 +51,7 @@ jobs:
                   fi
             - run: pnpm install --frozen-lockfile
               if: steps.version.outputs.publish == 'true'
-            - run: pnpm check && pnpm exec oxfmt --config=oxfmt.json --check .
+            - run: pnpm check
               if: steps.version.outputs.publish == 'true'
             - run: npm publish --access public
               if: steps.version.outputs.publish == 'true'

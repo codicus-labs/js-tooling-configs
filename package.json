@@ -78,8 +78,11 @@
     },
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
-        "check": "pnpm run build && pnpm run typecheck && pnpm run test",
-        "typecheck": "tsc --noEmit -p tsconfig.build.json",
+        "check": "pnpm run build && pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm run test",
+        "format:check": "oxfmt --check .",
+        "lint": "oxlint .",
+        "prepare": "pnpm run build",
+        "typecheck": "tsc -b tsconfig.json",
         "test": "node --test test/*.test.mjs"
     },
     "dependencies": {
