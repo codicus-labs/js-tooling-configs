@@ -1,73 +1,52 @@
 # @codicus/configs
 
-Shared JavaScript, TypeScript, Node, and Svelte/SvelteKit tooling presets in one npm package. Node.js 24+ and pnpm are expected. The initial npm release has not been published yet.
+Shared Oxlint, Oxfmt, ESLint/Svelte and TypeScript configs for Node 24+ projects. For a new TypeScript library, start from the [TypeScript library template](https://github.com/codicus-labs/typescript-library-template); configure tests, CI and Git hooks in the project.
 
-## Presets
+## TypeScript 7: Oxlint
 
-| Tool         | Exports                                                                                           |
-| ------------ | ------------------------------------------------------------------------------------------------- |
-| ESLint       | `eslint`, `eslint/node`, `eslint/svelte`, `eslint/package-boundaries`, `eslint/no-module-mocking` |
-| Oxlint       | `oxlint`, `oxlint/node`, `oxlint/package-boundaries`, `oxlint/no-module-mocking`                  |
-| Oxfmt        | `oxfmt`                                                                                           |
-| TypeScript   | `tsconfig/base.json`, `tsconfig/node.json`, `tsconfig/svelte.json`                                |
-| Vitest       | `vitest`, `vitest/svelte`                                                                         |
-| Commitlint   | `commitlint`                                                                                      |
-| Custom rules | `lint-rules` (already included by the ESLint and Oxlint presets)                                  |
-| pnpm hook    | `pnpm-plugin`                                                                                     |
-
-All paths above are prefixed with `@codicus/configs/`. Install the peer tools used by your chosen presets; Svelte projects also need `svelte` and, for the Vitest preset, `@sveltejs/vite-plugin-svelte` and `jsdom`.
-
-```js
-// eslint.config.js — SvelteKit
-import createSvelteConfig from '@codicus/configs/eslint/svelte';
-export default createSvelteConfig(import.meta.dirname);
+```sh
+pnpm add -D @codicus/configs typescript@^7 oxlint oxlint-tsgolint oxfmt @types/node
 ```
 
-```js
-// oxlint.config.js — lints JS/TS; ESLint handles .svelte files
+```ts
+// oxlint.config.ts
 export { default } from '@codicus/configs/oxlint';
 ```
 
-Oxfmt formats `.svelte` with bundled Prettier when `svelte` is installed. Use the JSON preset directly: `oxfmt --config node_modules/@codicus/configs/oxfmt.json .`. A separate Prettier package is not required.
-
-```json
-// tsconfig.json — SvelteKit; run `svelte-kit sync` to generate .svelte-kit/tsconfig.json
-{
-    "extends": ["@codicus/configs/tsconfig/svelte.json", "./.svelte-kit/tsconfig.json"]
-}
+```ts
+// oxfmt.config.ts
+export { default } from '@codicus/configs/oxfmt';
 ```
 
-```js
-// vitest.config.js
-export { default } from '@codicus/configs/vitest/svelte';
-```
+In the library template, have `configs/tsconfig.base.json` extend `@codicus/configs/tsconfig/base.json`; keep source paths, cache locations and project references local. For a standalone Node project, extend `@codicus/configs/tsconfig/node.json`. Set `env: { node: true }` in the project Oxlint config if you need Node globals. Run `pnpm exec oxlint .` and `pnpm exec oxfmt --check .`.
 
-```js
-// commitlint.config.js
-export { default } from '@codicus/configs/commitlint';
-```
+## SvelteKit: TypeScript 6 and ESLint
 
-For the pnpm policy, install `@codicus/configs` first, then add a workspace-root `.pnpmfile.mjs`:
-
-```js
-export { hooks } from '@codicus/configs/pnpm-plugin';
-```
-
-Unlike a dedicated `pnpm-plugin-*` config dependency, this **single package** cannot bootstrap its own pnpm hook before dependencies are installed: pnpm config dependencies cannot have regular dependencies. Keep the package installed for subsequent installs, or split the hook into a separate package if first-install enforcement becomes necessary.
-
-## Development
-
-`oxlint.config.ts` and `oxfmt.config.ts` at the repository root are auto-discovered by the CLIs and editor integrations. After `pnpm install`, the `prepare` script builds the local package exports needed by Oxlint and its custom rules.
+SvelteKit uses the ESLint preset instead of Oxlint. Install these alongside your SvelteKit dependencies:
 
 ```sh
-pnpm install
-pnpm check # build, typecheck, Oxlint, Oxfmt, tests
+pnpm add -D @codicus/configs typescript@^6 eslint typescript-eslint svelte-check oxfmt
 ```
 
-## Releases
+```js
+// eslint.config.js
+import createConfig from '@codicus/configs/eslint-svelte';
+export default createConfig(import.meta.dirname);
+```
 
-The first publish must be done manually (`pnpm check && npm publish --access public`); npm trusted publishing can only be configured on an existing package. Then, on npmjs.com under `@codicus/configs` → Settings → Trusted Publisher, configure GitHub Actions for owner `codicus-labs`, repository `js-tooling-configs`, workflow `publish.yml`, with direct `npm publish` allowed. The workflow needs no npm token.
+```ts
+// oxfmt.config.ts
+export { default } from '@codicus/configs/oxfmt';
+```
 
-For subsequent changes, commit an intent with `pnpm change` (preview with `pnpm change status`). These `.changeset/` files are pnpm's native format; neither the Changesets CLI nor its action is used. On `main`, the Release PR workflow runs `pnpm version -r`, writes `CHANGELOG.md`, and opens/updates `release-pr/main`. Merge that PR to publish the new version to npm and create a GitHub release. The repository or organization must allow GitHub Actions to create pull requests under Settings → Actions → General → Workflow permissions. PRs created with `GITHUB_TOKEN` do not trigger CI automatically, but the publish workflow reruns checks before publishing.
+After `svelte-kit sync`, extend the shared base before SvelteKit's generated config so its framework defaults take precedence:
 
-The package has no license grant (`UNLICENSED`); decide on a public license before inviting external reuse.
+```json
+{ "extends": ["@codicus/configs/tsconfig/base.json", "./.svelte-kit/tsconfig.json"] }
+```
+
+Run `pnpm exec eslint src` and `pnpm exec svelte-check --tsconfig tsconfig.json`. Format with `pnpm exec oxfmt --check .`.
+
+## Developing this package
+
+Use Node from `.node-version` and pnpm 12.4.2. Run `pnpm install --frozen-lockfile`, `pnpm build`, and `pnpm check` (typecheck, lint, format and Knip). Optional hooks: `pnpm hooks:install`.

@@ -45,7 +45,7 @@ jobs:
             - uses: actions/setup-node@v6
               if: steps.version.outputs.publish == 'true'
               with:
-                  node-version: '24'
+                  node-version-file: .node-version
                   cache: pnpm
             - name: Check npm bootstrap
               if: steps.version.outputs.publish == 'true'
@@ -59,6 +59,8 @@ jobs:
                     exit 1
                   fi
             - run: pnpm install --frozen-lockfile
+              if: steps.version.outputs.publish == 'true'
+            - run: pnpm build
               if: steps.version.outputs.publish == 'true'
             - run: pnpm check
               if: steps.version.outputs.publish == 'true'

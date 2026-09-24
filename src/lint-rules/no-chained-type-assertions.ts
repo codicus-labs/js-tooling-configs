@@ -1,6 +1,6 @@
 import type { ESTree, Rule } from '@oxlint/plugins';
 
-import { isConstAssertion, isTypeAssertion, unwrapExpression, type TypeAssertion } from './shared.js';
+import { isConstAssertion, isTypeAssertion, unwrapExpression, type TypeAssertion } from './shared.ts';
 
 function isOutermost(node: TypeAssertion): boolean {
     let current: ESTree.Expression = node;

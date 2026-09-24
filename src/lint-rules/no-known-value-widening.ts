@@ -1,6 +1,6 @@
 import type { ESTree, Rule, SourceCode, Variable } from '@oxlint/plugins';
 
-import { isStableConst, resolveVariable, unwrapExpression, unwrapType, variableDeclarator } from './shared.js';
+import { isStableConst, resolveVariable, unwrapExpression, unwrapType, variableDeclarator } from './shared.ts';
 
 export type BroadTarget = 'object' | 'open dictionary' | 'unknown';
 

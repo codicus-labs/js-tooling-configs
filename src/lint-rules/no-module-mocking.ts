@@ -1,6 +1,6 @@
 import type { ESTree, Rule, SourceCode } from '@oxlint/plugins';
 
-import { resolveVariable } from './shared.js';
+import { resolveVariable } from './shared.ts';
 
 const methods = new Set(['doMock', 'mock', 'unstable_mockModule']);
 

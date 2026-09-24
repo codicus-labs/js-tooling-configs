@@ -10,138 +10,82 @@
     "files": [
         "dist",
         "tsconfig",
-        "oxfmt.json",
         "pnpmfile.mjs"
     ],
     "type": "module",
     "exports": {
-        "./eslint": {
-            "types": "./dist/eslint/index.d.ts",
-            "default": "./dist/eslint/index.js"
-        },
-        "./eslint/node": {
-            "types": "./dist/eslint/node.d.ts",
-            "default": "./dist/eslint/node.js"
-        },
-        "./eslint/svelte": {
-            "types": "./dist/eslint/svelte.d.ts",
-            "default": "./dist/eslint/svelte.js"
-        },
-        "./eslint/no-module-mocking": {
-            "types": "./dist/eslint/no-module-mocking.d.ts",
-            "default": "./dist/eslint/no-module-mocking.js"
-        },
-        "./eslint/package-boundaries": {
-            "types": "./dist/eslint/package-boundaries.d.ts",
-            "default": "./dist/eslint/package-boundaries.js"
+        "./eslint-svelte": {
+            "types": "./dist/eslint-svelte.d.mts",
+            "default": "./dist/eslint-svelte.mjs"
         },
         "./oxlint": {
-            "types": "./dist/oxlint/index.d.ts",
-            "default": "./dist/oxlint/index.js"
-        },
-        "./oxlint/node": {
-            "types": "./dist/oxlint/node.d.ts",
-            "default": "./dist/oxlint/node.js"
-        },
-        "./oxlint/no-module-mocking": {
-            "types": "./dist/oxlint/no-module-mocking.d.ts",
-            "default": "./dist/oxlint/no-module-mocking.js"
-        },
-        "./oxlint/package-boundaries": {
-            "types": "./dist/oxlint/package-boundaries.d.ts",
-            "default": "./dist/oxlint/package-boundaries.js"
-        },
-        "./vitest": {
-            "types": "./dist/vitest/node.d.ts",
-            "default": "./dist/vitest/node.js"
-        },
-        "./vitest/svelte": {
-            "types": "./dist/vitest/svelte.d.ts",
-            "default": "./dist/vitest/svelte.js"
-        },
-        "./commitlint": {
-            "types": "./dist/commitlint.d.ts",
-            "default": "./dist/commitlint.js"
+            "types": "./dist/oxlint.d.mts",
+            "default": "./dist/oxlint.mjs"
         },
         "./lint-rules": {
-            "types": "./dist/lint-rules/index.d.ts",
-            "default": "./dist/lint-rules/index.js"
+            "types": "./dist/lint-rules/index.d.mts",
+            "default": "./dist/lint-rules/index.mjs"
         },
         "./tsconfig/base.json": "./tsconfig/base.json",
         "./tsconfig/node.json": "./tsconfig/node.json",
-        "./tsconfig/svelte.json": "./tsconfig/svelte.json",
-        "./oxfmt": "./oxfmt.json",
+        "./oxfmt": {
+            "types": "./dist/oxfmt.d.mts",
+            "default": "./dist/oxfmt.mjs"
+        },
         "./pnpm-plugin": "./pnpmfile.mjs"
     },
     "publishConfig": {
         "access": "public"
     },
     "scripts": {
-        "build": "tsc -p tsconfig.build.json",
-        "check": "pnpm run build && pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm run test",
+        "build": "tsdown",
+        "check": "pnpm run '/^(typecheck|lint|format:check|unused)$/'",
+        "format": "oxfmt .",
         "format:check": "oxfmt --check .",
         "lint": "oxlint .",
+        "hooks:install": "git config core.hooksPath .githooks",
         "prepare": "pnpm run build",
-        "typecheck": "tsc -b tsconfig.json",
-        "test": "node --test test/*.test.mjs"
+        "typecheck": "tsc -p tsconfig.json",
+        "unused": "knip"
     },
     "dependencies": {
-        "@commitlint/config-conventional": "21.2.2",
-        "@commitlint/types": "21.2.0",
         "@eslint/js": "10.0.1",
         "@tsconfig/node24": "24.0.5",
-        "@vitest/eslint-plugin": "1.6.27",
         "eslint-config-prettier": "10.1.8",
-        "eslint-plugin-playwright": "2.11.0",
         "eslint-plugin-svelte": "3.23.0",
-        "globals": "17.11.0",
-        "typescript-eslint": "8.67.0"
+        "globals": "17.11.0"
     },
     "devDependencies": {
+        "@commitlint/cli": "21.2.3",
+        "@commitlint/config-conventional": "21.2.2",
         "@oxlint/plugins": "1.79.0",
-        "@sveltejs/vite-plugin-svelte": "7.3.1",
         "@types/node": "26.1.0",
-        "@vitest/coverage-v8": "4.1.11",
         "eslint": "10.9.0",
-        "jsdom": "29.1.1",
+        "knip": "6.37.0",
+        "lint-staged": "17.5.1",
         "oxfmt": "0.64.0",
         "oxlint": "1.79.0",
+        "oxlint-tsgolint": "7.0.2002",
         "svelte": "5.57.1",
+        "tsdown": "0.23.0",
         "typescript": "6.0.3",
-        "vite": "8.2.2",
-        "vitest": "4.1.11"
+        "typescript-eslint": "8.67.0"
     },
     "peerDependencies": {
-        "@commitlint/cli": ">=21 <22",
-        "@sveltejs/vite-plugin-svelte": ">=7 <8",
         "@types/node": ">=24 <27",
-        "@vitest/coverage-v8": ">=4 <5",
         "eslint": ">=10 <11",
-        "jsdom": ">=29 <30",
         "oxfmt": ">=0.64 <1",
         "oxlint": ">=1.79 <2",
+        "oxlint-tsgolint": ">=7 <8",
         "svelte": ">=5 <6",
-        "typescript": ">=5.9 <6.1",
-        "vite": ">=8 <9",
-        "vitest": ">=4 <5"
+        "typescript": ">=5.9 <8",
+        "typescript-eslint": ">=8.67 <9"
     },
     "peerDependenciesMeta": {
-        "@commitlint/cli": {
-            "optional": true
-        },
-        "@sveltejs/vite-plugin-svelte": {
-            "optional": true
-        },
         "@types/node": {
             "optional": true
         },
-        "@vitest/coverage-v8": {
-            "optional": true
-        },
         "eslint": {
-            "optional": true
-        },
-        "jsdom": {
             "optional": true
         },
         "oxfmt": {
@@ -150,21 +94,39 @@
         "oxlint": {
             "optional": true
         },
+        "oxlint-tsgolint": {
+            "optional": true
+        },
         "svelte": {
             "optional": true
         },
         "typescript": {
             "optional": true
         },
-        "vite": {
-            "optional": true
-        },
-        "vitest": {
+        "typescript-eslint": {
             "optional": true
         }
+    },
+    "lint-staged": {
+        "*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}": [
+            "oxfmt",
+            "oxlint --fix --no-error-on-unmatched-pattern"
+        ],
+        "*.{json,jsonc,md,mdx,yaml,yml,css,scss,svelte,html}": "oxfmt"
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ]
     },
     "engines": {
         "node": ">=24"
     },
-    "packageManager": "pnpm@12.4.2"
+    "packageManager": "pnpm@12.4.2",
+    "knip": {
+        "ignoreDependencies": [
+            "@commitlint/cli",
+            "lint-staged"
+        ]
+    }
 }

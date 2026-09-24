@@ -1,6 +1,6 @@
 import type { ESTree, Rule } from '@oxlint/plugins';
 
-import { classifyBroadTarget, hasKnownValue, type BroadTarget } from './no-known-value-widening.js';
+import { classifyBroadTarget, hasKnownValue, type BroadTarget } from './no-known-value-widening.ts';
 import {
     isStableConst,
     nodeEnd,
@@ -9,7 +9,7 @@ import {
     unwrapExpression,
     variableDeclarator,
     type TypeAssertion,
-} from './shared.js';
+} from './shared.ts';
 
 function initializerBroadTarget(
     declarator: ESTree.VariableDeclarator,

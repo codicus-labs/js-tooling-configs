@@ -1,1 +1,1 @@
-export { default } from './oxfmt.json' with { type: 'json' };
+export { default } from './src/oxfmt.ts';

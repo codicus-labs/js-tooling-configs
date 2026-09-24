@@ -1,4 +1,7 @@
 {
-    "files": [],
-    "references": [{ "path": "./tsconfig.build.json" }, { "path": "./tsconfig.tooling.json" }]
+    "extends": "./tsconfig/node.json",
+    "compilerOptions": {
+        "tsBuildInfoFile": "./node_modules/.cache/tsconfig.tsbuildinfo"
+    },
+    "include": ["src/**/*.ts", "*.config.ts"]
 }

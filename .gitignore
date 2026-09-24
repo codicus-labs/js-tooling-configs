@@ -1,5 +1,7 @@
 .DS_Store
 coverage/
+.svelte-kit/
+build/
 dist/
 node_modules/
 .pnpm/

@@ -1,6 +1,6 @@
 import type { ESTree, Rule, SourceCode } from '@oxlint/plugins';
 
-import { isConstAssertion, nodeEnd, nodeStart, type TypeAssertion } from './shared.js';
+import { isConstAssertion, nodeEnd, nodeStart, type TypeAssertion } from './shared.ts';
 
 const commentOwners = new Set([
     'ExportDefaultDeclaration',

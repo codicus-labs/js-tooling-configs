@@ -1,12 +1,12 @@
 import type { Plugin } from '@oxlint/plugins';
 
-import { noChainedTypeAssertions } from './no-chained-type-assertions.js';
-import { packageBoundaries } from './package-boundaries.js';
-import { noKnownValueWidening } from './no-known-value-widening.js';
-import { noModuleMocking } from './no-module-mocking.js';
-import { noReflectApply, noReflectGet } from './no-reflect-method.js';
-import { noWidenThenAssert } from './no-widen-then-assert.js';
-import { requireSafetyCommentForTypeAssertion } from './require-safety-comment-for-type-assertion.js';
+import { noChainedTypeAssertions } from './no-chained-type-assertions.ts';
+import { noKnownValueWidening } from './no-known-value-widening.ts';
+import { noModuleMocking } from './no-module-mocking.ts';
+import { noReflectApply, noReflectGet } from './no-reflect-method.ts';
+import { noWidenThenAssert } from './no-widen-then-assert.ts';
+import { packageBoundaries } from './package-boundaries.ts';
+import { requireSafetyCommentForTypeAssertion } from './require-safety-comment-for-type-assertion.ts';
 
 const plugin: Plugin = {
     meta: {
