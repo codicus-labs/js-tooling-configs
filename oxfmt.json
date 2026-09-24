@@ -8,6 +8,6 @@
     "tabWidth": 4,
     "trailingComma": "all",
     "useTabs": false,
-    "svelte": { "indentScriptAndStyle": false },
+    "svelte": { "indentScriptAndStyle": true },
     "sortTailwindcss": true
 }
