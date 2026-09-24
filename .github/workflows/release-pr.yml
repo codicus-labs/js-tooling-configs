@@ -30,6 +30,7 @@ jobs:
               with:
                   branch: release-pr/main
                   delete-branch: true
+                  sign-commits: true
                   add-paths: |
                       package.json
                       pnpm-lock.yaml
