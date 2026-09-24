@@ -31,11 +31,12 @@ test('Oxfmt auto-discovers the root config and formats Svelte', () => {
     const result = spawnSync('pnpm', ['exec', 'oxfmt', '--stdin-filepath=example.svelte'], {
         cwd: root,
         encoding: 'utf8',
-        input: '<script>let count=1;</script>\n<h1 class="px-4 flex bg-red-500">{count}</h1>\n',
+        input: '<script>let count=1;</script>\n<h1 class="px-4 flex bg-red-500">{count}</h1>\n<style>h1{color:red;}</style>\n',
     });
     assert.equal(result.status, 0, result.stderr);
-    assert.match(result.stdout, /<script>\nlet count = 1;\n<\/script>/);
+    assert.match(result.stdout, /<script>\n    let count = 1;\n<\/script>/);
     assert.match(result.stdout, /class="flex bg-red-500 px-4"/);
+    assert.match(result.stdout, /<style>\n    h1 \{\n        color: red;\n    \}\n<\/style>/);
 });
 
 test('pnpm plugin applies the installation policy', async () => {
