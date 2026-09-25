@@ -1,5 +1,11 @@
 # @codicus/configs
 
+## 0.4.0
+
+### Minor Changes
+
+- Remove the pnpm-plugin subpath. Install @codicus/pnpm-plugin-configs as a separate pnpm config dependency instead.
+
 ## 0.3.0
 
 ### Minor Changes
