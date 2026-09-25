@@ -1,5 +1,11 @@
 # @codicus/configs
 
+## 0.5.0
+
+### Minor Changes
+
+- Enable `import/no-cycle` as an error in the default Oxlint preset.
+
 ## 0.4.0
 
 ### Minor Changes

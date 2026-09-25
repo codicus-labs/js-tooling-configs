@@ -11,3 +11,7 @@
   dir: packages/configs
   intents:
     - monorepo-pnpm-plugin
+"@codicus/configs@0.5.0":
+  dir: packages/configs
+  intents:
+    - oxlint-import-cycles
