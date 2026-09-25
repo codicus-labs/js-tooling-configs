@@ -1,5 +1,6 @@
-engineStrict: true
-trustPolicy: no-downgrade
+packages:
+    - packages/*
+pnpmfile: ./packages/pnpm-plugin/pnpmfile.mjs
 versioning:
     changelog:
         storage: repository

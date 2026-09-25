@@ -6,7 +6,7 @@ on:
     workflow_dispatch:
 
 permissions:
-    contents: write
+    contents: read
     id-token: write
 
 concurrency:
@@ -15,60 +15,16 @@ concurrency:
 
 jobs:
     publish:
+        if: github.ref == 'refs/heads/main'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v6
-              with:
-                  fetch-depth: 0
-            - name: Detect version change
-              id: version
-              env:
-                  BEFORE: ${{ github.event.before }}
-              run: |
-                  if [ "$GITHUB_REF" != refs/heads/main ]; then
-                    echo 'Only main may publish to npm.' >&2
-                    exit 1
-                  fi
-                  current=$(node -p "require('./package.json').version")
-                  if [ "$GITHUB_EVENT_NAME" = workflow_dispatch ]; then
-                    echo "publish=true" >> "$GITHUB_OUTPUT"
-                    echo "version=$current" >> "$GITHUB_OUTPUT"
-                    exit 0
-                  fi
-                  previous=$(git show "$BEFORE:package.json" | node -p "JSON.parse(require('fs').readFileSync(0, 'utf8')).version")
-                  if [ "$previous" != "$current" ]; then
-                    echo "publish=true" >> "$GITHUB_OUTPUT"
-                    echo "version=$current" >> "$GITHUB_OUTPUT"
-                  fi
             - uses: pnpm/action-setup@v4
-              if: steps.version.outputs.publish == 'true'
             - uses: actions/setup-node@v6
-              if: steps.version.outputs.publish == 'true'
               with:
                   node-version-file: .node-version
                   cache: pnpm
-            - name: Check npm bootstrap
-              if: steps.version.outputs.publish == 'true'
-              run: |
-                  if ! npm view @codicus/configs name --json >/dev/null 2>&1; then
-                    echo 'Publish 0.1.0 manually, then configure npm trusted publishing for publish.yml before merging a release PR.' >&2
-                    exit 1
-                  fi
-                  if npm view "@codicus/configs@${{ steps.version.outputs.version }}" version --json >/dev/null 2>&1; then
-                    echo 'This version is already published; refusing to publish it again.' >&2
-                    exit 1
-                  fi
             - run: pnpm install --frozen-lockfile
-              if: steps.version.outputs.publish == 'true'
             - run: pnpm build
-              if: steps.version.outputs.publish == 'true'
             - run: pnpm check
-              if: steps.version.outputs.publish == 'true'
-            - run: npm publish --access public --registry=https://registry.npmjs.org/
-              if: steps.version.outputs.publish == 'true'
-            - name: Tag and create GitHub release
-              if: steps.version.outputs.publish == 'true'
-              env:
-                  GH_TOKEN: ${{ github.token }}
-                  VERSION: ${{ steps.version.outputs.version }}
-              run: gh release create "v$VERSION" --target "$GITHUB_SHA" --generate-notes --title "v$VERSION"
+            - run: pnpm -r publish --access public --provenance --no-git-checks --registry=https://registry.npmjs.org/

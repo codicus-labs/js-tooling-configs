@@ -1,0 +1,21 @@
+{
+    "name": "@codicus/pnpm-plugin-configs",
+    "version": "0.1.0",
+    "description": "Shared pnpm installation policy",
+    "license": "UNLICENSED",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/codicus-labs/js-tooling-configs.git",
+        "directory": "packages/pnpm-plugin"
+    },
+    "files": [
+        "pnpmfile.mjs"
+    ],
+    "type": "module",
+    "publishConfig": {
+        "access": "public"
+    },
+    "engines": {
+        "node": ">=24"
+    }
+}

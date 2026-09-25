@@ -1,0 +1,97 @@
+{
+    "name": "@codicus/configs",
+    "version": "0.3.0",
+    "description": "Shared JavaScript, TypeScript, and Svelte tooling configurations",
+    "license": "UNLICENSED",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/codicus-labs/js-tooling-configs.git",
+        "directory": "packages/configs"
+    },
+    "files": [
+        "dist",
+        "tsconfig"
+    ],
+    "type": "module",
+    "exports": {
+        "./eslint-svelte": {
+            "types": "./dist/eslint-svelte.d.mts",
+            "default": "./dist/eslint-svelte.mjs"
+        },
+        "./oxlint": {
+            "types": "./dist/oxlint.d.mts",
+            "default": "./dist/oxlint.mjs"
+        },
+        "./lint-rules": {
+            "types": "./dist/lint-rules/index.d.mts",
+            "default": "./dist/lint-rules/index.mjs"
+        },
+        "./tsconfig/base.json": "./tsconfig/base.json",
+        "./tsconfig/node.json": "./tsconfig/node.json",
+        "./oxfmt": {
+            "types": "./dist/oxfmt.d.mts",
+            "default": "./dist/oxfmt.mjs"
+        }
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "scripts": {
+        "build": "tsdown"
+    },
+    "dependencies": {
+        "@eslint/js": "10.0.1",
+        "@tsconfig/node24": "24.0.5",
+        "eslint-config-prettier": "10.1.8",
+        "eslint-plugin-svelte": "3.23.0",
+        "globals": "17.11.0"
+    },
+    "devDependencies": {
+        "@oxlint/plugins": "1.79.0",
+        "eslint": "10.9.0",
+        "oxfmt": "0.64.0",
+        "oxlint": "1.79.0",
+        "tsdown": "0.23.0",
+        "typescript": "6.0.3",
+        "typescript-eslint": "8.67.0"
+    },
+    "peerDependencies": {
+        "@types/node": ">=24 <27",
+        "eslint": ">=10 <11",
+        "oxfmt": ">=0.64 <1",
+        "oxlint": ">=1.79 <2",
+        "oxlint-tsgolint": ">=7 <8",
+        "svelte": ">=5 <6",
+        "typescript": ">=5.9 <8",
+        "typescript-eslint": ">=8.67 <9"
+    },
+    "peerDependenciesMeta": {
+        "@types/node": {
+            "optional": true
+        },
+        "eslint": {
+            "optional": true
+        },
+        "oxfmt": {
+            "optional": true
+        },
+        "oxlint": {
+            "optional": true
+        },
+        "oxlint-tsgolint": {
+            "optional": true
+        },
+        "svelte": {
+            "optional": true
+        },
+        "typescript": {
+            "optional": true
+        },
+        "typescript-eslint": {
+            "optional": true
+        }
+    },
+    "engines": {
+        "node": ">=24"
+    }
+}
