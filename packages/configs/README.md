@@ -18,6 +18,8 @@ export { default } from '@codicus/configs/oxlint';
 export { default } from '@codicus/configs/oxfmt';
 ```
 
+The shared Oxfmt preset leaves Svelte formatting and Tailwind class sorting disabled; enable either in your project's `oxfmt.config.ts` when needed.
+
 In the library template, have `configs/tsconfig.base.json` extend `@codicus/configs/tsconfig/base.json`; keep source paths, cache locations and project references local. For a standalone Node project, extend `@codicus/configs/tsconfig/node.json`. Set `env: { node: true }` in the project Oxlint config if you need Node globals. Run `pnpm exec oxlint .` and `pnpm exec oxfmt --check .`.
 
 ## SvelteKit: TypeScript 6 and ESLint
@@ -36,8 +38,16 @@ export default createConfig(import.meta.dirname);
 
 ```ts
 // oxfmt.config.ts
-export { default } from '@codicus/configs/oxfmt';
+import base from '@codicus/configs/oxfmt';
+import { defineConfig } from 'oxfmt';
+
+export default defineConfig({
+    ...base,
+    svelte: { indentScriptAndStyle: true },
+});
 ```
+
+For Tailwind projects, also add `sortTailwindcss: { functions: ['cn', 'tv'] }` to this config. Svelte formatting requires the project's `svelte` dependency.
 
 After `svelte-kit sync`, extend the shared base before SvelteKit's generated config so its framework defaults take precedence:
 

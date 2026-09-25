@@ -10,10 +10,6 @@ export default defineConfig({
     tabWidth: 4,
     trailingComma: 'all',
     useTabs: false,
-    svelte: { indentScriptAndStyle: true },
-    sortTailwindcss: {
-        functions: ['cn', 'tv'],
-    },
     sortPackageJson: true,
     sortImports: true,
 });
