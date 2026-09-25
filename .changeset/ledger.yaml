@@ -3,3 +3,7 @@
   intents:
     - svelte-indentation
     - tailwind-sorting
+"@codicus/configs@0.3.0":
+  dir: ""
+  intents:
+    - simplify-tooling-presets
