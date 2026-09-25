@@ -48,6 +48,7 @@ const baseConfig = defineConfig({
     rules: {
         eqeqeq: ['error', 'always', { null: 'ignore' }],
         'import/extensions': ['error', 'ignorePackages', { checkTypeImports: true }],
+        'import/no-cycle': 'error',
         'codicus/no-chained-type-assertions': 'error',
         'codicus/no-known-value-widening': 'warn',
         'codicus/no-module-mocking': 'error',
