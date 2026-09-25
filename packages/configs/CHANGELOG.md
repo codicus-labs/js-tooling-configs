@@ -1,5 +1,11 @@
 # @codicus/configs
 
+## 0.6.0
+
+### Minor Changes
+
+- Disable Svelte formatting and Tailwind class sorting in the shared Oxfmt preset by default. Enable either option in the consuming project's Oxfmt config.
+
 ## 0.5.0
 
 ### Minor Changes

@@ -15,3 +15,7 @@
   dir: packages/configs
   intents:
     - oxlint-import-cycles
+"@codicus/configs@0.6.0":
+  dir: packages/configs
+  intents:
+    - opt-in-svelte-tailwind-formatting
