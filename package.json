@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "pnpm --filter @codicus/configs build",
+        "build": "pnpm -r build",
         "check": "pnpm run '/^(typecheck|lint|format:check|unused)$/'",
         "format": "oxfmt .",
         "format:check": "oxfmt --check .",

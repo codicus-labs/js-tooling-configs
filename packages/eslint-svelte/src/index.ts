@@ -1,3 +1,4 @@
+import lintRules from '@codicus/configs/lint-rules';
 import js from '@eslint/js';
 import type { ESLint, Linter } from 'eslint';
 import prettier from 'eslint-config-prettier/flat';
@@ -5,8 +6,6 @@ import svelte from 'eslint-plugin-svelte';
 import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-
-import lintRules from './lint-rules/index.ts';
 
 const sourceFiles = ['**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,svelte}'];
 const javascriptFiles = ['**/*.{js,cjs,mjs}'];
