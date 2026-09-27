@@ -1,5 +1,11 @@
 # @codicus/configs
 
+## 0.7.0
+
+### Minor Changes
+
+- Move the ESLint/Svelte preset to `@codicus/eslint-svelte` and remove the `eslint-svelte` subpath and its dependencies from `@codicus/configs`.
+
 ## 0.6.0
 
 ### Minor Changes
