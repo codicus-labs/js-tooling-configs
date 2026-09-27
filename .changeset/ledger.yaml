@@ -19,3 +19,7 @@
   dir: packages/configs
   intents:
     - opt-in-svelte-tailwind-formatting
+"@codicus/configs@0.7.0":
+  dir: packages/configs
+  intents:
+    - split-eslint-svelte
